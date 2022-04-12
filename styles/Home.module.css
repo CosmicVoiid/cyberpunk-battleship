@@ -37,7 +37,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 7rem;
+  margin-top: 5rem;
 }
 
 .button {
@@ -49,8 +49,7 @@
   margin: .5rem;
   font-family: var(--ft-cyber);
   font-size: var(--fs-m);
-  box-shadow: 0px 1px 2px 2px #DDDDDD inset;
-  box-shadow: 0px -1px 2px 2px #AAAA inset;
+  box-shadow: 0px 1px 5px 0px white inset, 0px -1px 5px 0px black inset;
 }
 
 .button:hover {

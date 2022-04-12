@@ -1,0 +1,14 @@
+<svg width="10" height="30" viewBox="0 0 10 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="destoyerPiece">
+<path id="destroyer" d="M0 6.7082C0 6.24247 0.106308 5.78527 0.328133 5.37575C1.16024 3.83959 3.40009 0 5 0C6.59991 0 8.83976 3.83959 9.67187 5.37575C9.89369 5.78527 10 6.24247 10 6.7082V27C10 28.6569 8.65685 30 7 30H3C1.34315 30 0 28.6569 0 27V6.7082Z" fill="url(#paint0_linear_18_94)"/>
+<circle id="grid3" cx="5" cy="6" r="3" fill="white"/>
+<circle id="grid2" cx="5" cy="15" r="3" fill="white"/>
+<circle id="grid1" cx="5" cy="25" r="3" fill="white"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_18_94" x1="5" y1="0" x2="5" y2="30" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0ABDC6"/>
+<stop offset="1" stop-color="#EA00D9"/>
+</linearGradient>
+</defs>
+</svg>

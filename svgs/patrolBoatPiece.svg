@@ -1,0 +1,13 @@
+<svg width="10" height="20" viewBox="0 0 10 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="patrolBoatPiece">
+<path id="patrolBoat" d="M0 5C0 4.35089 0.208291 3.71745 0.628242 3.22249C1.61541 2.05899 3.56508 0 5 0C6.43492 0 8.38459 2.05899 9.37176 3.22249C9.79171 3.71745 10 4.35089 10 5V17C10 18.6569 8.65685 20 7 20H3C1.34315 20 0 18.6569 0 17V5Z" fill="url(#paint0_linear_18_73)"/>
+<circle id="grid2" cx="5" cy="6" r="3" fill="white"/>
+<circle id="grid1" cx="5" cy="15" r="3" fill="white"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_18_73" x1="5" y1="0" x2="5" y2="20" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0ABDC6"/>
+<stop offset="1" stop-color="#EA00D9"/>
+</linearGradient>
+</defs>
+</svg>

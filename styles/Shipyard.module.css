@@ -1,0 +1,50 @@
+.shipyardContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.boatContainer {
+    display: flex;
+    width: 250px;
+    height: auto;
+    justify-content: space-between;
+    align-items: center;
+    margin: .5rem 0;
+}
+
+.boatHeader {
+    font-size: var(--fs-xs);
+    margin: 0 .5rem;
+    font-weight: 400;
+    font-family: var(--ft-cyber);
+}
+
+/* .boatContainer > svg {
+    transform-origin: bottom left;
+    transform: rotate(90deg) scale(2);
+} */
+
+.boat {
+    height: 20px;
+    background-color: grey;
+}
+
+.patrolBoatContainer {
+    width: 20px;
+}
+
+.submarineContainer {
+    width: 40px;
+}
+
+.destroyerContainer {
+    width: 60px;
+}
+
+.battleshipContainer {
+    width: 80px;
+}
+
+.carrierContainer {
+    width: 100px;
+}
