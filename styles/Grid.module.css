@@ -3,7 +3,7 @@
     grid-template-columns: repeat(11, 1fr);
     grid-template-rows: repeat(11, 1fr);
     border-radius: var(--border-radius);
-    gap: 3px;
+    gap: 2.5px;
     justify-content: center;
     align-items: center;
 }
@@ -11,4 +11,26 @@
 .number, .alphabet {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
+
+/* .num1 {
+    grid-row-start: 2;
+}
+
+.num1 {
+    grid-row-start: 2;
+}
+
+.num1 {
+    grid-row-start: 2;
+}
+
+.num1 {
+    grid-row-start: 2;
+}
+
+.num1 {
+    grid-row-start: 2;
+} */
+

@@ -1,10 +1,13 @@
 .tile {
     border-radius: 3px;
-    background-color: var(--clr-blue-200);
     min-width: 20px;
     min-height: 20px;
 }
 
 .tileWater {
-    background-color: var(--clr-blue-200);
+    background-color: hsl(200, 100%, 50%);
+}
+
+.boat {
+    background-color: grey;
 }

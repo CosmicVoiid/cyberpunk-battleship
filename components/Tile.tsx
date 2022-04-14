@@ -1,16 +1,26 @@
-import { useState } from 'react';
-import styles from '../styles/Tile.module.css'
+import { useState } from "react";
+import styles from "../styles/Tile.module.css";
 
 type Props = {
-    stat?: string
-}
+	status: string;
+	index: number;
+	onClick: (i: number) => void;
+};
 
-const Tile = ({stat}: Props) => {
-    const [tileStatus, setTileStatus] = useState(stat)
+const Tile = ({ status, index, onClick }: Props) => {
+	const [tileStatus, setTileStatus] = useState(status);
+	const [tileIndex, setTileIndex] = useState<number>(index);
 
-    return <div className={styles.tile}>
-
-    </div>
-}
+	return (
+		<div
+			className={
+				status === "water"
+					? `${styles.tile} ${styles.tileWater}`
+					: `${styles.tile} ${styles.tileBoat}`
+			}
+			onClick={() => onClick(tileIndex)}
+		></div>
+	);
+};
 
 export default Tile;
