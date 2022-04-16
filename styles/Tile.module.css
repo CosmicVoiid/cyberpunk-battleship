@@ -8,6 +8,10 @@
     background-color: hsl(200, 100%, 50%);
 }
 
-.boat {
+.tileBoat {
     background-color: grey;
+}
+
+.tileHover {
+    background-color: rgba(128, 128, 128, 0.5);
 }

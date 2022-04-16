@@ -1,3 +1,9 @@
+.gridComponent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .gridContainer {
     display: grid;
     grid-template-columns: repeat(11, 1fr);
@@ -14,23 +20,16 @@
     align-items: center;
 }
 
-/* .num1 {
-    grid-row-start: 2;
+.btn {
+    padding: .3rem 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--clr-cyber);
+    color: white;
+    font-size: var(--fs-s)
 }
 
-.num1 {
-    grid-row-start: 2;
+.btn:hover {
+    cursor: pointer;
 }
-
-.num1 {
-    grid-row-start: 2;
-}
-
-.num1 {
-    grid-row-start: 2;
-}
-
-.num1 {
-    grid-row-start: 2;
-} */
-
