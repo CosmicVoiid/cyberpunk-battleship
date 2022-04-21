@@ -1,9 +1,16 @@
 import Head from "next/head";
+import { useState } from "react";
 import Grid from "../components/Grid";
 import Shipyard from "../components/Shipyard";
 import styles from "../styles/SinglePlayer.module.css";
 
 const SinglePlayer = () => {
+	const [gameStage, setGameStage] = useState<string>("prep");
+
+	const handleGameStart = () => {
+		setGameStage("start");
+	};
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -14,8 +21,11 @@ const SinglePlayer = () => {
 
 			<main className={styles.main}>
 				<h1 className={styles.header}>Organize your fleet!</h1>
-				<Grid />
+				<Grid player={true} startGame={handleGameStart} />
 				{/* <Shipyard /> */}
+				{gameStage === "start" && (
+					<Grid player={false} startGame={handleGameStart} />
+				)}
 			</main>
 		</div>
 	);

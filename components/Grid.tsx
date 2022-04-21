@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import styles from "../styles/Grid.module.css";
 import Tile from "./Tile";
 
+type Props = {
+	player: boolean;
+	startGame: () => void;
+};
+
 type tileArray = {
 	index: number;
 	status: string;
@@ -9,22 +14,29 @@ type tileArray = {
 	boatName?: string;
 }[];
 
-const Grid = () => {
+const Grid = ({ player, startGame }: Props) => {
 	const [tileArray, setTileArray] = useState<tileArray>([]);
-	const [gameStage, setGameStage] = useState("prep");
+	const [gameStage, setGameStage] = useState<string>("prep");
 	const [direction, setDirection] = useState<string>("x");
+	const [randomize, setRandomize] = useState<boolean>(false);
 	const [boat, setBoat] = useState<number>(0);
 
 	const GRID_SQUARES = 100;
 	const NUM_COORD = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 	const ALPHA_COORD = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+	const boatArray = [
+		{ name: "Patrol Boat", size: 2 },
+		{ name: "Submarine", size: 3 },
+		{ name: "Destroyer", size: 3 },
+		{ name: "Battleship", size: 4 },
+		{ name: "Carrier", size: 5 },
+	];
 
-	const initilizeGrid = () => {
-		const initialArray = [];
+	const initilizeGrid = async () => {
+		const initialArray: tileArray = [];
 		for (let i = 0; i < GRID_SQUARES; i++) {
 			initialArray.push({ index: i, status: "water", hover: false });
 		}
-		console.log(initialArray);
 		setTileArray(initialArray);
 	};
 
@@ -32,8 +44,53 @@ const Grid = () => {
 		initilizeGrid();
 	}, []);
 
+	useEffect(() => {
+		if (tileArray.length !== 0 && !randomize) {
+			aiShipPlacement();
+			setRandomize(true);
+			setGameStage("start");
+		}
+	}, [tileArray]);
+
 	const dropHandler = (e: any) => {
 		e.preventDefault();
+	};
+
+	const aiShipPlacement = () => {
+		let direction: number;
+		let index: number;
+		let updatedTileArray: tileArray = [...tileArray];
+		for (let i = 0; i < boatArray.length; i++) {
+			// direction = Math.floor(Math.random() * 2);
+			direction = Math.floor(Math.random() * 2);
+			if (direction === 0) {
+				do {
+					index =
+						Math.floor(Math.random() * (10 - boatArray[i].size)) +
+						10 * Math.floor(Math.random() * 10);
+				} while (checkPlacement("x", index, boatArray[i].size));
+
+				for (let j = 0; j < boatArray[i].size; j++) {
+					updatedTileArray[index + j].boatName = boatArray[i].name;
+					updatedTileArray[index + j].status = "boat";
+				}
+			} else if (direction === 1) {
+				do {
+					index =
+						Math.floor(Math.random() * 10) +
+						10 * Math.floor(Math.random() * (10 - boatArray[i].size));
+					console.log(index);
+				} while (checkPlacement("y", index, boatArray[i].size));
+
+				for (let j = 0; j < boatArray[i].size; j++) {
+					updatedTileArray[index + j * 10].boatName = boatArray[i].name;
+					updatedTileArray[index + j * 10].status = "boat";
+				}
+			}
+		}
+
+		setTileArray(updatedTileArray);
+		return;
 	};
 
 	const changeDirection = (e: any) => {
@@ -49,15 +106,10 @@ const Grid = () => {
 
 	const BOATSIZE = 4;
 
-	const boatArray = [
-		{ name: "Patrol Boat", size: 2 },
-		{ name: "Submarine", size: 3 },
-		{ name: "Destroyer", size: 3 },
-		{ name: "Battleship", size: 4 },
-		{ name: "Carrier", size: 5 },
-	];
-
 	const hoverHighlight = (boatIndex: number) => {
+		if (gameStage !== "prep" || boat === boatArray.length || !player) {
+			return;
+		}
 		let updatedTileArray = [...tileArray];
 		const boatSize = boatArray[boat].size;
 		let xBreak = checkPlacement("x", boatIndex, boatSize);
@@ -77,6 +129,9 @@ const Grid = () => {
 	};
 
 	const highlightRemove = (boatIndex: number) => {
+		if (gameStage !== "prep" || boat === boatArray.length || !player) {
+			return;
+		}
 		let updatedTileArray = [...tileArray];
 		const boatSize = boatArray[boat].size;
 		let xBreak = checkPlacement("x", boatIndex, boatSize);
@@ -98,6 +153,9 @@ const Grid = () => {
 	};
 
 	const placeShip = (boatIndex: number) => {
+		if (gameStage !== "prep" || !player) {
+			return;
+		}
 		let updatedTileArray = [...tileArray];
 		const boatSize = boatArray[boat].size;
 		const boatName = boatArray[boat].name;
@@ -111,7 +169,7 @@ const Grid = () => {
 				updatedTileArray[boatIndex + i].hover = false;
 			}
 
-			if (boat < boatArray.length - 1) {
+			if (boat < boatArray.length) {
 				let updatedIndex = boat + 1;
 				setBoat(updatedIndex);
 			}
@@ -122,12 +180,16 @@ const Grid = () => {
 				updatedTileArray[boatIndex + i * 10].hover = false;
 			}
 
-			if (boat < boatArray.length - 1) {
+			if (boat < boatArray.length) {
 				let updatedIndex = boat + 1;
 				setBoat(updatedIndex);
 			}
 		}
 
+		if (boat === boatArray.length - 1) {
+			console.log("yo");
+			setGameStage("start");
+		}
 		console.log(updatedTileArray);
 		setTileArray(updatedTileArray);
 	};
@@ -158,6 +220,8 @@ const Grid = () => {
 				}
 			}
 		}
+
+		return false;
 	};
 
 	return (
@@ -199,6 +263,7 @@ const Grid = () => {
 					);
 				})}
 			</div>
+			{gameStage === "start" && <button onClick={startGame}>Start</button>}
 		</div>
 	);
 };
