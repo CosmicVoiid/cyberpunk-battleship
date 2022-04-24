@@ -19,6 +19,7 @@ const Grid = ({ player, startGame }: Props) => {
 	const [gameStage, setGameStage] = useState<string>("prep");
 	const [direction, setDirection] = useState<string>("x");
 	const [randomize, setRandomize] = useState<boolean>(false);
+	const [displayButtons, setDisplayButtons] = useState<boolean>(true);
 	const [boat, setBoat] = useState<number>(0);
 
 	const GRID_SQUARES = 100;
@@ -38,19 +39,24 @@ const Grid = ({ player, startGame }: Props) => {
 			initialArray.push({ index: i, status: "water", hover: false });
 		}
 		setTileArray(initialArray);
+		setGameStage("prep");
+		setBoat(0);
 	};
 
 	useEffect(() => {
 		initilizeGrid();
+		if (!player) {
+			setRandomize(true);
+		}
 	}, []);
 
 	useEffect(() => {
-		if (tileArray.length !== 0 && !randomize) {
+		if (tileArray.length !== 0 && randomize) {
 			aiShipPlacement();
-			setRandomize(true);
+			setRandomize(false);
 			setGameStage("start");
 		}
-	}, [tileArray]);
+	}, [randomize]);
 
 	const dropHandler = (e: any) => {
 		e.preventDefault();
@@ -77,9 +83,8 @@ const Grid = ({ player, startGame }: Props) => {
 			} else if (direction === 1) {
 				do {
 					index =
-						Math.floor(Math.random() * 10) +
-						10 * Math.floor(Math.random() * (10 - boatArray[i].size));
-					console.log(index);
+						10 * Math.floor(Math.random() * (10 - boatArray[i].size)) +
+						Math.floor(Math.random() * 10);
 				} while (checkPlacement("y", index, boatArray[i].size));
 
 				for (let j = 0; j < boatArray[i].size; j++) {
@@ -98,13 +103,20 @@ const Grid = ({ player, startGame }: Props) => {
 		direction === "x" ? setDirection("y") : setDirection("x");
 	};
 
+	const randomizeShips = () => {
+		initilizeGrid();
+		setRandomize(true);
+	};
+
+	const clearShips = () => {
+		initilizeGrid();
+	};
+
 	// const placeShips = (shipsArray: [{name: string, size: number, direction: string}]) => {
 	// 	for (let i = 0; i < shipsArray.length; i++) {
 
 	// 	}
 	// }
-
-	const BOATSIZE = 4;
 
 	const hoverHighlight = (boatIndex: number) => {
 		if (gameStage !== "prep" || boat === boatArray.length || !player) {
@@ -224,11 +236,26 @@ const Grid = ({ player, startGame }: Props) => {
 		return false;
 	};
 
+	const gridStart = () => {
+		setDisplayButtons(false);
+		startGame();
+	};
+
 	return (
 		<div className={styles.gridComponent}>
-			<button onClick={changeDirection} className={styles.btn}>
-				Change Direction
-			</button>
+			{player && displayButtons && (
+				<div className={styles.buttonContainer}>
+					<button onClick={changeDirection} className={styles.btn}>
+						Change Direction
+					</button>
+					<button onClick={randomizeShips} className={styles.btn}>
+						Randomize
+					</button>
+					<button onClick={clearShips} className={styles.btn}>
+						Clear
+					</button>
+				</div>
+			)}
 			<div className={styles.gridContainer}>
 				{ALPHA_COORD.map((alpha) => {
 					return (
@@ -263,7 +290,11 @@ const Grid = ({ player, startGame }: Props) => {
 					);
 				})}
 			</div>
-			{gameStage === "start" && <button onClick={startGame}>Start</button>}
+			{gameStage === "start" && player && displayButtons && (
+				<button onClick={gridStart} className={styles.btn}>
+					Start
+				</button>
+			)}
 		</div>
 	);
 };

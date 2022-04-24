@@ -20,7 +20,9 @@ const SinglePlayer = () => {
 			</Head>
 
 			<main className={styles.main}>
-				<h1 className={styles.header}>Organize your fleet!</h1>
+				{gameStage === "prep" && (
+					<h1 className={styles.header}>Organize your fleet!</h1>
+				)}
 				<Grid player={true} startGame={handleGameStart} />
 				{/* <Shipyard /> */}
 				{gameStage === "start" && (
