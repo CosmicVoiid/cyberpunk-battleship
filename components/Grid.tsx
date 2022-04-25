@@ -4,7 +4,12 @@ import Tile from "./Tile";
 
 type Props = {
 	player: boolean;
+	playerName: string;
+	turn: string;
 	startGame: () => void;
+	endGame: (player: string) => void;
+	handleShot: (index: number) => void;
+	shot: number;
 };
 
 type tileArray = {
@@ -14,7 +19,15 @@ type tileArray = {
 	boatName?: string;
 }[];
 
-const Grid = ({ player, startGame }: Props) => {
+const Grid = ({
+	player,
+	playerName,
+	turn,
+	startGame,
+	endGame,
+	handleShot,
+	shot,
+}: Props) => {
 	const [tileArray, setTileArray] = useState<tileArray>([]);
 	const [gameStage, setGameStage] = useState<string>("prep");
 	const [direction, setDirection] = useState<string>("x");
@@ -241,8 +254,80 @@ const Grid = ({ player, startGame }: Props) => {
 		startGame();
 	};
 
+	useEffect(() => {
+		const registerShot = () => {
+			let tileArrayCopy: tileArray = [...tileArray];
+			if (tileArray[shot].status === "boat") {
+				tileArrayCopy[shot].status = "hit";
+			} else if (tileArray[shot].status === "water") {
+				tileArrayCopy[shot].status = "miss";
+			}
+			if (turn === "player 2") {
+				handleShot(shot);
+			}
+			tileArrayCopy[shot].hover = false;
+			setTileArray(tileArrayCopy);
+		};
+
+		if (shot !== -1) {
+			registerShot();
+			checkWin();
+		}
+	}, [shot, turn]);
+
+	const playerShot = (index: number) => {
+		if (turn === "player 2" || gameStage === "end") {
+			return;
+		}
+		return handleShot(index);
+	};
+
+	const shotHover = (index: number) => {
+		if (turn === "player 2") {
+			return;
+		}
+		let tileArrayCopy: tileArray = [...tileArray];
+		tileArrayCopy[index].hover = true;
+		setTileArray(tileArrayCopy);
+	};
+
+	const shotHoverOff = (index: number) => {
+		if (turn === "player 2") {
+			return;
+		}
+		let tileArrayCopy: tileArray = [...tileArray];
+		tileArrayCopy[index].hover = false;
+		setTileArray(tileArrayCopy);
+	};
+
+	const checkWin = () => {
+		let counter: number = 0;
+		let allShipSize: number = 0;
+		boatArray.map((boat) => {
+			allShipSize += boat.size;
+		});
+
+		tileArray.map((tile) => {
+			if (tile.status === "hit") {
+				counter++;
+			}
+
+			if (counter === allShipSize) {
+				setGameStage("end");
+				if (player) {
+					endGame("player 2");
+				} else {
+					endGame("player 1");
+				}
+			}
+		});
+	};
+
 	return (
 		<div className={styles.gridComponent}>
+			{gameStage !== "prep" && (
+				<div className={styles.playerName}>{playerName}</div>
+			)}
 			{player && displayButtons && (
 				<div className={styles.buttonContainer}>
 					<button onClick={changeDirection} className={styles.btn}>
@@ -277,17 +362,35 @@ const Grid = ({ player, startGame }: Props) => {
 				})}
 
 				{tileArray.map((tile, index) => {
-					return (
-						<Tile
-							key={index}
-							index={index}
-							status={tile.status}
-							hover={tile.hover}
-							onClick={(index: number) => placeShip(index)}
-							onMouseOver={(index: number) => hoverHighlight(index)}
-							onMouseOut={(index: number) => highlightRemove(index)}
-						/>
-					);
+					if (player) {
+						return (
+							<Tile
+								player={true}
+								key={index}
+								index={index}
+								status={tile.status}
+								hover={tile.hover}
+								onClick={(index: number) => placeShip(index)}
+								onMouseOver={(index: number) => hoverHighlight(index)}
+								onMouseOut={(index: number) => highlightRemove(index)}
+							/>
+						);
+					} else {
+						return (
+							<Tile
+								player={false}
+								key={index}
+								index={index}
+								status={tile.status}
+								hover={tile.hover}
+								onClick={(index: number) => {
+									playerShot(index);
+								}}
+								onMouseOver={(index: number) => shotHover(index)}
+								onMouseOut={(index: number) => shotHoverOff(index)}
+							/>
+						);
+					}
 				})}
 			</div>
 			{gameStage === "start" && player && displayButtons && (

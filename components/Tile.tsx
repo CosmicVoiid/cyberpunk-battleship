@@ -5,15 +5,17 @@ type Props = {
 	status: string;
 	index: number;
 	hover: boolean;
-	onClick: (i: number) => void;
-	onMouseOver: (i: number) => void;
-	onMouseOut: (i: number) => void;
+	player: boolean;
+	onClick?: (i: number) => void;
+	onMouseOver?: (i: number) => void;
+	onMouseOut?: (i: number) => void;
 };
 
 const Tile = ({
 	status,
 	index,
 	hover,
+	player,
 	onClick,
 	onMouseOver,
 	onMouseOut,
@@ -23,13 +25,25 @@ const Tile = ({
 			className={
 				`${styles.tile} ` +
 				((hover && `${styles.tileHover}`) ||
-					(status === "water" && `${styles.tileWater}`) ||
-					(status === "boat" && `${styles.tileBoat}`))
+					((status === "water" || status == "miss") && `${styles.tileWater}`) ||
+					(((player && status === "boat") || status === "hit") &&
+						`${styles.tileBoat}`) ||
+					(!player && `${styles.tileWater}`))
 			}
-			onClick={() => onClick(index)}
-			onMouseOver={() => onMouseOver(index)}
-			onMouseOut={() => onMouseOut(index)}
-		></div>
+			onClick={() => {
+				if (onClick && !(status === "hit" || status === "miss")) onClick(index);
+			}}
+			onMouseOver={() => {
+				if (onMouseOver && !(status === "hit" || status === "miss"))
+					onMouseOver(index);
+			}}
+			onMouseOut={() => {
+				if (onMouseOut) onMouseOut(index);
+			}}
+		>
+			{status === "hit" && <span className={styles.tileHit} />}
+			{status === "miss" && <span className={styles.tileMiss} />}
+		</div>
 	);
 };
 
