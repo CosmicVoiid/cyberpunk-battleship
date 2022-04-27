@@ -44,11 +44,16 @@
     margin-top: .5rem;
     font-size: var(--fs-s);
     background-color: var(--clr-yellow-400);
+    min-width: 7rem;
     color: var(--clr-blue-800);
     border: none;
     border-radius: var(--border-radius);
     font-family: var(--ft-cyber);
     box-shadow: 0px 1px 5px 0px white inset, 0px -1px 5px 0px black inset;
+}
+
+.btn:last-child {
+    margin-bottom: 1rem;
 }
 
 .btn:hover {

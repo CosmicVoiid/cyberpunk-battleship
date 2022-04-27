@@ -57,3 +57,16 @@
   background: var(--clr-cyber);
   color: white;
 }
+
+@media (min-width: 800px) {
+  .primaryHeader {
+    font-size: 5rem;
+  }
+  .secondaryHeader {
+    font-size: 2.5rem;
+  }
+
+  .button{ 
+    font-size: var(--fs-xl)
+  }
+}

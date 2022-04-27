@@ -19,7 +19,7 @@ const Home = () => {
 
 				<div className={styles.buttonContainer}>
 					<Link href="/singleplayer">
-						<button className={styles.button}>1 Player</button>
+						<button className={styles.button}>Start</button>
 					</Link>
 					{/* <button className={styles.button}>2 Player</button>
 					<button className={styles.button}>Online</button> */}
