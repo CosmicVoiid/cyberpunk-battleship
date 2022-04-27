@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 @font-face {
   font-family: cyber;
-  src: url("../public/fonts/CyberwayRiders.ttf");
+  src: url("/fonts/CyberwayRiders.ttf");
 }
 
 :root {
