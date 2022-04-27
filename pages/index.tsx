@@ -21,8 +21,8 @@ const Home = () => {
 					<Link href="/singleplayer">
 						<button className={styles.button}>1 Player</button>
 					</Link>
-					<button className={styles.button}>2 Player</button>
-					<button className={styles.button}>Online</button>
+					{/* <button className={styles.button}>2 Player</button>
+					<button className={styles.button}>Online</button> */}
 				</div>
 			</main>
 		</div>

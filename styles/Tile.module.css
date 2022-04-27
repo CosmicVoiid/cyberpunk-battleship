@@ -33,3 +33,17 @@
     background-color: var(--clr-blue-200);
     border-radius: 50%;
 }
+
+@media (min-width: 800px) {
+    .tile {
+        min-width: 30px;
+        min-height: 30px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .tile {
+        min-width: 35px;
+        min-height: 35px;
+    }
+}

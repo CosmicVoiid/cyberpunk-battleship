@@ -333,7 +333,7 @@ const Grid = ({
 						Clear
 					</button>
 					<button onClick={changeDirection} className={styles.btn}>
-						Change Direction
+						Direction: {direction.toUpperCase()}
 					</button>
 				</div>
 			)}

@@ -68,3 +68,24 @@
     background-clip: text;
     text-fill-color: transparent;
 }
+
+@media (min-width: 800px) {
+    .gridComponent {
+        margin: 5rem 0;
+    }
+
+    .buttonContainer {
+        margin-top: -5rem;
+        margin-bottom: 2rem;
+    }
+    .gridContainer {
+        margin-right: 2rem;
+        margin-left: 2rem;
+    }
+}
+
+@media (min-width: 1200px) {
+    .gridContainer {
+        margin: 0 5rem;
+    }
+}

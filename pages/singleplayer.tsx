@@ -89,32 +89,34 @@ const SinglePlayer = () => {
 					<h1 className={styles.header}>{`${winner} wins!`}</h1>
 				)}
 
-				<Grid
-					key={reset}
-					player={true}
-					playerName={"Player 1"}
-					startGame={handleGameStart}
-					endGame={handleGameEnd}
-					turn={turn}
-					handleShot={handleShot}
-					shot={player2Shot}
-				/>
+				<div className={styles.flexContainer}>
+					<Grid
+						key={reset}
+						player={true}
+						playerName={"Player 1"}
+						startGame={handleGameStart}
+						endGame={handleGameEnd}
+						turn={turn}
+						handleShot={handleShot}
+						shot={player2Shot}
+					/>
 
-				{/* <Shipyard /> */}
-				{(gameStage === "start" || gameStage === "end") && (
-					<div>
-						<span className={styles.divider} />
-						<Grid
-							player={false}
-							playerName={"Computer"}
-							startGame={handleGameStart}
-							endGame={handleGameEnd}
-							turn={turn}
-							handleShot={handleShot}
-							shot={player1Shot}
-						/>
-					</div>
-				)}
+					{/* <Shipyard /> */}
+					{(gameStage === "start" || gameStage === "end") && (
+						<div>
+							<span className={styles.divider} />
+							<Grid
+								player={false}
+								playerName={"Computer"}
+								startGame={handleGameStart}
+								endGame={handleGameEnd}
+								turn={turn}
+								handleShot={handleShot}
+								shot={player1Shot}
+							/>
+						</div>
+					)}
+				</div>
 				{gameStage === "end" && (
 					<button onClick={resetGame} className={styles.btn}>
 						Play Again
