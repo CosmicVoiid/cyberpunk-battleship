@@ -23,6 +23,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    /* color: var(--clr-yellow-400); */
+    font-family: var(--ft-cyber);
+    background: var(--clr-cyber);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    
 }
 
 .buttonContainer {
@@ -34,17 +42,29 @@
     padding: .3rem 1rem;
     margin-bottom: .5rem;
     margin-top: .5rem;
+    font-size: var(--fs-s);
+    background-color: var(--clr-yellow-400);
+    color: var(--clr-blue-800);
     border: none;
     border-radius: var(--border-radius);
-    background: var(--clr-cyber);
-    color: white;
-    font-size: var(--fs-s)
+    font-family: var(--ft-cyber);
+    box-shadow: 0px 1px 5px 0px white inset, 0px -1px 5px 0px black inset;
 }
 
 .btn:hover {
     cursor: pointer;
+    background: var(--clr-cyber);
+    color: white;
 }
 
 .playerName {
     margin-bottom: .5rem;
+    /* color: var(--clr-yellow-400); */
+    font-family: var(--ft-cyber);
+    font-size: var(--fs-l);
+    background: var(--clr-cyber);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
 }

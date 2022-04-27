@@ -2,15 +2,17 @@ import Head from "next/head";
 import { useState, useEffect } from "react";
 import Grid from "../components/Grid";
 import Shipyard from "../components/Shipyard";
+import Link from "next/link";
 import styles from "../styles/SinglePlayer.module.css";
 
 const SinglePlayer = () => {
 	const [gameStage, setGameStage] = useState<string>("prep");
-	const [turn, setTurn] = useState<string>("player 1");
+	const [turn, setTurn] = useState<string>("Player 1");
 	const [player1Shot, setPlayer1Shot] = useState<number>(-1);
 	const [player2Shot, setPlayer2Shot] = useState<number>(-1);
 	const [computerShotLog, setComputerShotLog] = useState<number[]>([]);
 	const [winner, setWinner] = useState<string>();
+	const [reset, setReset] = useState<number>(0);
 
 	const handleGameStart = () => {
 		setGameStage("start");
@@ -22,15 +24,15 @@ const SinglePlayer = () => {
 	};
 
 	const handleShot = (index: number) => {
-		if (turn === "player 1") {
+		if (turn === "Player 1") {
 			setPlayer1Shot(index);
-			setTurn("player 2");
+			setTurn("Computer");
 			setTimeout(() => {
 				setPlayer2Shot(ai());
 			}, 500);
-		} else if (turn === "player 2") {
+		} else if (turn === "Computer") {
 			setTimeout(() => {
-				setTurn("player 1");
+				setTurn("Player 1");
 			}, 500);
 		}
 	};
@@ -40,6 +42,9 @@ const SinglePlayer = () => {
 		do {
 			randomShot = Math.floor(Math.random() * 100);
 		} while (checkShotLog(randomShot));
+		let shotLogCopy = [...computerShotLog];
+		shotLogCopy.push(randomShot);
+		setComputerShotLog(shotLogCopy);
 		return randomShot;
 	};
 
@@ -52,6 +57,17 @@ const SinglePlayer = () => {
 		});
 
 		return match;
+	};
+
+	const resetGame = () => {
+		setGameStage("prep");
+		setTurn("Player 1");
+		setPlayer1Shot(-1);
+		setPlayer2Shot(-1);
+		setComputerShotLog([]);
+		setWinner("");
+		let number = reset;
+		setReset(++number);
 	};
 
 	return (
@@ -72,7 +88,9 @@ const SinglePlayer = () => {
 				{gameStage === "end" && (
 					<h1 className={styles.header}>{`${winner} wins!`}</h1>
 				)}
+
 				<Grid
+					key={reset}
 					player={true}
 					playerName={"Player 1"}
 					startGame={handleGameStart}
@@ -81,13 +99,14 @@ const SinglePlayer = () => {
 					handleShot={handleShot}
 					shot={player2Shot}
 				/>
+
 				{/* <Shipyard /> */}
 				{(gameStage === "start" || gameStage === "end") && (
 					<div>
 						<span className={styles.divider} />
 						<Grid
 							player={false}
-							playerName={"Player 2"}
+							playerName={"Computer"}
 							startGame={handleGameStart}
 							endGame={handleGameEnd}
 							turn={turn}
@@ -95,6 +114,11 @@ const SinglePlayer = () => {
 							shot={player1Shot}
 						/>
 					</div>
+				)}
+				{gameStage === "end" && (
+					<button onClick={resetGame} className={styles.btn}>
+						Play Again
+					</button>
 				)}
 			</main>
 		</div>

@@ -8,29 +8,28 @@
 }
 
 .tileWater {
-    background-color: hsl(200, 100%, 50%);
+    background-color: var(--clr-blue-400);
 }
 
 .tileBoat {
-    background-color: grey;
+    background-color: #e721da;
 
 }
 
 .tileHover {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: #e08bdb;
 }
-
 
 .tileHit {
     height: 10px;
     width: 10px;
-    background-color: rgb(255, 62, 62);
+    background-color: rgb(131, 0, 163);
     border-radius: 50%;
 }
 
 .tileMiss {
     height: 10px;
     width: 10px;
-    background-color: rgb(150, 150, 150);
+    background-color: var(--clr-blue-200);
     border-radius: 50%;
 }

@@ -212,7 +212,6 @@ const Grid = ({
 		}
 
 		if (boat === boatArray.length - 1) {
-			console.log("yo");
 			setGameStage("start");
 		}
 		console.log(updatedTileArray);
@@ -262,7 +261,7 @@ const Grid = ({
 			} else if (tileArray[shot].status === "water") {
 				tileArrayCopy[shot].status = "miss";
 			}
-			if (turn === "player 2") {
+			if (turn === "Computer") {
 				handleShot(shot);
 			}
 			tileArrayCopy[shot].hover = false;
@@ -276,14 +275,14 @@ const Grid = ({
 	}, [shot, turn]);
 
 	const playerShot = (index: number) => {
-		if (turn === "player 2" || gameStage === "end") {
+		if (turn === "Computer" || gameStage === "end") {
 			return;
 		}
 		return handleShot(index);
 	};
 
 	const shotHover = (index: number) => {
-		if (turn === "player 2") {
+		if (turn === "Computer") {
 			return;
 		}
 		let tileArrayCopy: tileArray = [...tileArray];
@@ -292,7 +291,7 @@ const Grid = ({
 	};
 
 	const shotHoverOff = (index: number) => {
-		if (turn === "player 2") {
+		if (turn === "Computer") {
 			return;
 		}
 		let tileArrayCopy: tileArray = [...tileArray];
@@ -315,9 +314,9 @@ const Grid = ({
 			if (counter === allShipSize) {
 				setGameStage("end");
 				if (player) {
-					endGame("player 2");
+					endGame("Computer");
 				} else {
-					endGame("player 1");
+					endGame("Player 1");
 				}
 			}
 		});
@@ -325,22 +324,20 @@ const Grid = ({
 
 	return (
 		<div className={styles.gridComponent}>
-			{gameStage !== "prep" && (
-				<div className={styles.playerName}>{playerName}</div>
-			)}
 			{player && displayButtons && (
 				<div className={styles.buttonContainer}>
-					<button onClick={changeDirection} className={styles.btn}>
-						Change Direction
-					</button>
 					<button onClick={randomizeShips} className={styles.btn}>
 						Randomize
 					</button>
 					<button onClick={clearShips} className={styles.btn}>
 						Clear
 					</button>
+					<button onClick={changeDirection} className={styles.btn}>
+						Change Direction
+					</button>
 				</div>
 			)}
+			<div className={styles.playerName}>{playerName}</div>
 			<div className={styles.gridContainer}>
 				{ALPHA_COORD.map((alpha) => {
 					return (
